@@ -6,15 +6,18 @@ class Animal:
         self.name = name
         self.hidden = hidden
         if self.health > 0:
-            Animal.alive.append({
-                "Name": self.name,
-                "Health": self.health,
-                "Hidden": self.hidden,
-            })
+            Animal.alive.append(self)
 
+    @classmethod
+    def __str__(cls):
+        return [{"Name": animal.name, "Health": animal.health, "Hidden":
+            animal.hidden}
+                for animal
+                in
+                cls.alive]
     def check_is_alive(self) -> None:
         if self.health <= 0:
-            Animal.alive = [i for i in Animal.alive if i["Name"] != self.name]
+            Animal.alive = [i for i in Animal.alive if i.name != self.name]
 
 
 class Herbivore(Animal):
@@ -27,3 +30,8 @@ class Carnivore(Animal):
         if not herbivore.hidden and isinstance(herbivore, Herbivore):
             herbivore.health -= 50
             herbivore.check_is_alive()
+
+pantera = Carnivore("Bagira")
+snake = Carnivore("Kaa")
+print(Animal.alive)
+# [{Name: Bagira, Health: 100, Hidden: False}, {Name: Kaa, Health: 100, Hidden: False}]
