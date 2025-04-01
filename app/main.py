@@ -8,13 +8,9 @@ class Animal:
         if self.health > 0:
             Animal.alive.append(self)
 
-    @classmethod
-    def __str__(cls):
-        return [{"Name": animal.name, "Health": animal.health, "Hidden":
-            animal.hidden}
-                for animal
-                in
-                cls.alive]
+
+    def __repr__(self):
+        return f"{{Name: {self.name}, Health: {self.health}, Hidden: {self.hidden}}}"
     def check_is_alive(self) -> None:
         if self.health <= 0:
             Animal.alive = [i for i in Animal.alive if i.name != self.name]
