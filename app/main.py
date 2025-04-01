@@ -12,12 +12,9 @@ class Animal:
                 "Hidden": self.hidden,
             })
 
-    def check_is_alive(self, herbivore: "Herbivore") -> None:
-        if herbivore.health <= 0:
-            for i in Animal.alive:
-                if i["Name"] == herbivore.name:
-                    Animal.alive.remove(i)
-                    break
+    def check_is_alive(self) -> None:
+        if self.health <= 0:
+            Animal.alive = [i for i in Animal.alive if i["Name"] != self.name]
 
 
 class Herbivore(Animal):
@@ -29,3 +26,4 @@ class Carnivore(Animal):
     def bite(self, herbivore: Herbivore) -> None:
         if not herbivore.hidden and isinstance(herbivore, Herbivore):
             herbivore.health -= 50
+            herbivore.check_is_alive()
